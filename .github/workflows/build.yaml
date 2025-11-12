@@ -1,4 +1,4 @@
-name: Build next js project
+name: Build and Deploy Next.js to Pages
 
 on:
   push:
@@ -20,16 +20,18 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - name: setup pages
+
+      - name: Setup Pages
         uses: actions/configure-pages@v3
         with:
-          static-output-directory: '.next'
+          enablement: true 
+          static-site-generator: 'Next.js' 
 
       - name: Install dependencies
         run: npm install
 
       - name: Build project
-        run: npm run build
+        run: npm run build 
 
       - name: Upload artifacts
         uses: actions/upload-pages-artifact@v3
@@ -37,7 +39,7 @@ jobs:
           path: ./out
 
   deploy:
-    environment: 
+    environment:
       name: github-pages
       url: ${{ steps.deploy-pages.outputs.page_url }}
     needs: build
