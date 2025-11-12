@@ -31,7 +31,7 @@ jobs:
         with:
           enablement: true
           # PERBAIKAN TYPO: Menggunakan underscore (_)
-          static_site_generator: 'Next.js' 
+          static_site_generator: 'next' 
 
       - name: Install dependencies
         run: npm install
@@ -52,5 +52,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Deploy to GitHub Pages
-        id: deploy-pages
+        id: deployment
         uses: actions/deploy-pages@v4
