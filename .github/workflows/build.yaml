@@ -20,9 +20,29 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+      - name: setup pages
+        uses: actions/configure-pages@v3
+        with:
+          static-output-directory: '.next'
 
       - name: Install dependencies
         run: npm install
 
       - name: Build project
         run: npm run build
+
+      - name: Upload artifacts
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./out
+
+  deploy:
+    environment: 
+      name: github-pages
+      url: ${{ steps.deploy-pages.outputs.page_url }}
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deploy-pages
+        uses: actions/deploy-pages@v4
